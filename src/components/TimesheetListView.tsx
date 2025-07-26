@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Plus, Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { ProgressBar } from './ui/ProgressBar';
 import { TimesheetModal } from './TimesheetModal';
 import { WeeklyTimesheet, DailyTimesheet, TimesheetEntry, Timesheet } from '@/lib/types';
 import { mockWeeklyTimesheet } from '@/lib/MockData';
+import { ActionDropdown } from './Dropdowns';
 
 interface TimesheetListViewProps {
   weekId?: string;
@@ -20,7 +21,18 @@ export const TimesheetListView: React.FC<TimesheetListViewProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEntry, setSelectedEntry] = useState<TimesheetEntry | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>('');
-
+  const actions = [
+    {
+      label: 'Edit',
+      onClick: (entry: TimesheetEntry) => handleEditEntry(entry, selectedDate),
+      className: 'font-normal text-[14px] h-[37px] leading-[150%] text-gray-700 hover:cursor-pointer'
+    },
+    {
+      label: 'Delete',
+      onClick: (entryId: string) => handleDeleteEntry(entryId, selectedDate),
+      className: 'text-red-600 text-[14px] h-[37px] leading-[150%] hover:cursor-pointer'
+    }
+  ]
   const handleAddTask = (date: string) => {
     setSelectedDate(date);
     setSelectedEntry(null);
@@ -95,24 +107,9 @@ export const TimesheetListView: React.FC<TimesheetListViewProps> = ({
                         <div>
                           {/* Only show action buttons if not readonly */}
                           {canEdit && (
-                            <div className="flex items-center space-x-1">
-                              {/* <button
-                                onClick={() => handleEditEntry(entry, day.date)}
-                                className="p-1 text-blue-600 hover:text-blue-800 transition-colors"
-                                title="Edit"
-                              >
-                                <Edit size={14} />
-                              </button>
-                              <button
-                                onClick={() => handleDeleteEntry(entry.id, day.date)}
-                                className="p-1 text-red-600 hover:text-red-800 transition-colors"
-                                title="Delete"
-                              >
-                                <Trash2 size={14} />
-                              </button> */}
-                              <button className="p-1 text-gray-400 hover:text-gray-600 transition-colors">
-                                <MoreHorizontal size={14} />
-                              </button>
+                            <div className="flex items-center">
+                              <ActionDropdown
+                                actions={actions} />
                             </div>
                           )}
                         </div>
