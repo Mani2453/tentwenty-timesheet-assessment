@@ -65,7 +65,7 @@ export const TimesheetListView: React.FC<TimesheetListViewProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-900">
-            This week's timesheet
+            This week&apos;s timesheet
           </h1>
           <ProgressBar
             current={weeklyData.totalHours}
@@ -151,8 +151,6 @@ export const TimesheetListView: React.FC<TimesheetListViewProps> = ({
             setSelectedDate('');
           }}
           timesheet={null}
-          entry={selectedEntry}
-          selectedDate={selectedDate}
           onSave={() => {
             setIsModalOpen(false);
             setSelectedEntry(null);

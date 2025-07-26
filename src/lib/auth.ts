@@ -20,17 +20,15 @@ const mockUsers: User[] = [
 export async function authenticateUser(email: string, password: string): Promise<User | null> {
   // In a real app, you'd verify against a database
   const user = mockUsers.find(u => u.email === email);
-  
   // For demo purposes, any password works
   if (user) {
     return user;
   }
-  
   return null;
 }
 
 export async function generateToken(user: User): Promise<string> {
-  const payload = { userId: user.id, email: user.email };
+  const payload = { id: user.id, email: user.email };
 
   const token = await new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
@@ -41,19 +39,18 @@ export async function generateToken(user: User): Promise<string> {
   return token;
 }
 
-export async function verifyToken(token: string): Promise<{ userId: string; email: string } | null> {
+export async function verifyToken(token: string): Promise<User | null> {
   try {
     const { payload } = await jwtVerify(token, secret);
-    return payload as { userId: string; email: string };
-  } catch (error) {
-    console.error('Token verification failed:', error);
+    return payload as User;
+  } catch {
     return null;
   }
 }
 
-export async function getUserFromToken(token: string):Promise<{ userId: string; email: string } | null> {
+export async function getUserFromToken(token: string):Promise<User | null> {
   const decoded = await verifyToken(token);
   if (!decoded) return null;
   
-  return mockUsers.find(u => u.id === decoded.userId) || null;
+  return mockUsers.find(u => u.id === decoded.id) || null;
 }

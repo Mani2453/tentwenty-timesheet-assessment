@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { TimesheetEntry } from "@/lib/types"
 
-export function UserDropdown({ userName, handleLogout }: any) {
+export function UserDropdown({ userName, handleLogout }: { userName: string, handleLogout: () => void }) {
   const [open, setOpen] = useState(false)
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -59,7 +59,7 @@ export function ActionDropdown({ actions }: ActionDropdownProps) {
         {actions.map((action, index) => (
           <DropdownMenuItem
             key={index}
-            onClick={action.onClick}
+            onClick={()=>{action.onClick}}
             className={action.className}
           >
             {action.label}

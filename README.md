@@ -1,43 +1,110 @@
-# Ticktock - Timesheet Management Application
+# 🛠️ Setup Instructions
 
-A modern, responsive timesheet management application built with Next.js 15, TypeScript, and TailwindCSS.
+## 1. Installation
+1. Clone the repository:
+   ```powershell
+   git clone https://github.com/Mani2453/tentwenty-timesheet-assessment.git
+   cd tentwenty-timesheet-assessment
+   ```
+2. Install dependencies:
+   ```powershell
+   npm install
+   # or
+   yarn install
+   ```
+3. Create a `.env.local` file in the root directory:
+   ```env
+   NEXTAUTH_SECRET=your-nextauth-secret-here
+   NEXTAUTH_URL=http://localhost:3000
+   ```
+4. Run the development server:
+   ```powershell
+   npm run dev
+   # or
+   yarn dev
+   ```
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 2. Frameworks/Libraries Used
+- **Next.js (App Router)**
+- **TypeScript**
+- **Tailwind CSS**
+- **ESLint**
+- **Jest**
+- **Lucide React**
+
+## 3. Assumptions & Notes
+- Authentication is mocked: any email/password combination works
+- Mock data resets on server restart
+- Single-user focus for demo
+- All times displayed in local timezone
+- Basic client-side validation
+
+## 4. Time Spent
+- Setup and configuration: 1 hour
+- UI components and styling: 4 hours
+- Authentication system: 2 hours
+- API development: 2 hours
+- Dashboard and timesheet features: 4 hours
+- Testing and refinement: 2-3 hours
+- Documentation: 1 hour
+
+# TenTwenty Timesheet Assessment
+
+A modern, responsive timesheet management application built with Next.js (App Router), TypeScript, and Tailwind CSS.
+
 
 ## 🚀 Features
 
-- **Authentication**: Secure login with JWT tokens and HTTP-only cookies
-- **Dashboard**: Clean, intuitive interface for managing timesheets
+- **Authentication**: Secure login (mocked for demo)
+- **Dashboard**: Intuitive interface for managing timesheets
 - **Timesheet Management**: View, create, and update timesheet entries
-- **Responsive Design**: Works perfectly on desktop and mobile devices
-- **Status Tracking**: Visual status indicators (Completed, Incomplete, Missing)
-- **Mock API**: Fully functional backend API simulation
+- **Project Management**: List and assign projects
+- **Responsive Design**: Works on desktop and mobile
+- **Status Tracking**: Visual indicators for timesheet status
+- **Mock API**: Simulated backend for development
 - **Type Safety**: Full TypeScript implementation
+- **Modern UI**: Built with Tailwind CSS
+
 
 ## 📋 Prerequisites
 
-- Node.js 18+ 
-- npm or yarn package manager
+- Node.js 18+
+- npm or yarn
 
-## 🛠️ Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd ticktock-timesheet
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
 yarn install
-```
 
-3. Create a `.env.local` file in the root directory:
-```env
-JWT_SECRET=your-super-secret-jwt-key-here
-NEXTAUTH_SECRET=your-nextauth-secret-here
-NEXTAUTH_URL=http://localhost:3000
-```
+## 🛠️ Installation & Setup
+
+1. **Clone the repository:**
+   ```powershell
+   git clone https://github.com/Mani2453/tentwenty-timesheet-assessment.git
+   cd tentwenty-timesheet-assessment
+   ```
+
+2. **Install dependencies:**
+   ```powershell
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Create a `.env.local` file in the root directory:**
+   ```env
+   # .env.local
+   NEXTAUTH_SECRET=your-nextauth-secret-here
+   NEXTAUTH_URL=http://localhost:3000
+   # JWT_SECRET is not required for the current mock setup
+   ```
+
+4. **Run the development server:**
+   ```powershell
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. **Open [http://localhost:3000](http://localhost:3000) in your browser.**
 
 4. Run the development server:
 ```bash
@@ -48,68 +115,69 @@ yarn dev
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+yarn test
+yarn test:watch
+
 ## 🧪 Testing
 
 Run the test suite:
-```bash
+```powershell
 npm test
 # or
 yarn test
 ```
 
-For watch mode:
-```bash
-npm run test:watch
-# or
-yarn test:watch
-```
 
 ## 📱 Usage
 
-### Login
-- Email: Any email format (e.g., `john@example.com`, `user@example.com`)
-- Password: Any password (authentication is mocked)
+### Login Credentials
+- **Email:**  `john@gmail.com.com`
+- **Password:** Any password (authentication is mocked)
 
 ### Dashboard Features
-- View all timesheet entries in a clean table format
+- View all timesheet entries in a table
 - Status indicators with color coding
 - Action buttons for each entry (View, Update, Create)
 - Add new timesheet entries via modal
 - Responsive design for mobile and desktop
 
+src/
+
 ## 🏗️ Project Structure
 
 ```
+public/           # Static assets
 src/
-├── app/                    # Next.js 13+ app directory
-│   ├── api/               # API routes
-│   ├── dashboard/         # Dashboard page
-│   ├── login/            # Login page
-│   └── layout.tsx        # Root layout
-├── components/           # React components
-│   ├── ui/              # Reusable UI components
-│   └── ...              # Feature components
-└── lib/                 # Utilities and types
+  app/            # Next.js app directory
+    api/          # API routes (auth, projects, timesheets)
+    dashboard/    # Dashboard pages
+    login/        # Login page
+    ...           # Other pages/components
+  components/     # Reusable UI components
+    ui/           # UI subcomponents
+  lib/            # Utility libraries (api, auth, mock data, types)
 ```
 
-## 🛠️ Technologies Used
 
-- **Next.js 15**: React framework with App Router
+## 🛠️ Technologies & Libraries
+
+- **Next.js (App Router)**: React framework
 - **TypeScript**: Type-safe JavaScript
-- **TailwindCSS**: Utility-first CSS framework
-- **JWT**: JSON Web Tokens for authentication
-- **Lucide React**: Beautiful icons
+- **Tailwind CSS**: Utility-first CSS framework
+- **ESLint**: Linting
 - **Jest**: Testing framework
+- **Lucide React**: Icon library
+
 
 ## 🎨 Design System
 
-The application follows the provided Figma designs with:
 - Clean, modern interface
 - Consistent color scheme (Primary blue: #3b82f6)
 - Responsive typography using Inter font
 - Accessible form controls and interactions
 
-## 🔧 API Endpoints
+
+## 🔧 API Endpoints (Mocked)
 
 - `POST /api/auth` - User authentication
 - `DELETE /api/auth` - User logout
@@ -117,10 +185,11 @@ The application follows the provided Figma designs with:
 - `POST /api/timesheets` - Create new timesheet
 - `GET /api/projects` - Fetch available projects
 
+
 ## 📈 Development Notes
 
 ### Architecture Decisions
-1. **App Router**: Using Next.js 15's app directory for better organization
+1. **App Router**: Using Next.js app directory for better organization
 2. **Server Components**: Leveraging server-side rendering where appropriate
 3. **API Routes**: Internal API routes for secure server-side operations
 4. **Mock Data**: Simulated backend for demonstration purposes
@@ -141,6 +210,7 @@ The application follows the provided Figma designs with:
 - Email notifications
 - Time tracking automation
 
+
 ## ⏱️ Time Spent
 
 **Total Development Time: ~12-15 hours**
@@ -153,6 +223,7 @@ The application follows the provided Figma designs with:
 - Testing and refinement: 2-3 hours
 - Documentation: 1 hour
 
+
 ## 📝 Assumptions Made
 
 1. **Authentication**: Dummy authentication accepts any email/password combination
@@ -161,14 +232,17 @@ The application follows the provided Figma designs with:
 4. **Time Zones**: All times displayed in local timezone
 5. **Validation**: Basic client-side validation with server-side checks
 
+
 ## 🚀 Deployment
 
 The application is ready for deployment to platforms like Vercel, Netlify, or any Node.js hosting service.
 
 For Vercel deployment:
-```bash
+```powershell
 npm run build
+npm start
 ```
+
 
 ## 📞 Support
 

@@ -36,7 +36,7 @@ export async function apiCall<T>(
       success: true,
       data,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false,
       error: 'Network error occurred',

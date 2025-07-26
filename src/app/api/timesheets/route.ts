@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getUserFromToken } from '@/lib/auth';
 import { Timesheet, TimesheetEntry } from '@/lib/types';
+import { User } from '@/lib/types';
 
 // Mock data
 const mockTimesheets: Timesheet[] = [
@@ -87,7 +88,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const user = await getUserFromToken(token);
+  const user : User | null= await getUserFromToken(token);
   if (!user) {
     return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
   }
