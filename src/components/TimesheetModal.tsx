@@ -6,6 +6,8 @@ import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { Timesheet, Project, CreateTimesheetEntry } from '@/lib/types';
 import { apiCall } from '@/lib/api';
+import { SelectField } from './ui/SelectField';
+import { TextAreaField } from './ui/TextareaField';
 
 interface TimesheetModalProps {
   isOpen: boolean;
@@ -60,7 +62,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
       ...prev,
       [name]: name === 'hours' ? Number(value) : value,
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
@@ -92,7 +94,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -103,7 +105,7 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
       // In a real app, you would submit this to an API
       // For now, we'll just simulate a successful submission
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       onSave();
     } catch (error) {
       setErrors({ general: 'Failed to save entry. Please try again.' });
@@ -114,14 +116,14 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
 
   const getModalTitle = () => {
     if (!timesheet) return 'Add New Entry';
-    
+
     switch (timesheet.status) {
       case 'COMPLETED':
         return 'View Timesheet Entry';
       case 'INCOMPLETE':
         return 'Update Timesheet Entry';
       case 'MISSING':
-        return 'Create Timesheet Entry';
+        return 'Add New Entry';
       default:
         return 'Timesheet Entry';
     }
@@ -134,78 +136,66 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       title={getModalTitle()}
-      size="md"
     >
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="flex flex-col justify-center w-[646px] h-[514px] gap-4 p-5">
         {errors.general && (
           <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
             {errors.general}
           </div>
         )}
 
-        <div>
-          <label htmlFor="project" className="block text-sm font-medium text-gray-700 mb-1">
-            Select Project *
-          </label>
-          <select
-            id="project"
-            name="projectId"
-            value={formData.projectId}
-            onChange={handleChange}
-            disabled={isReadOnly}
-            className={`
-              w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
-              focus:outline-none focus:ring-primary-500 focus:border-primary-500
-              ${errors.projectId ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-              ${isReadOnly ? 'bg-gray-50 cursor-not-allowed' : ''}
-            `}
-          >
-            <option value="">Project Name</option>
-            {projects.map(project => (
-              <option key={project.id} value={project.id}>
-                {project.name}
-              </option>
-            ))}
-          </select>
-          {errors.projectId && (
-            <p className="mt-1 text-sm text-red-600">{errors.projectId}</p>
-          )}
-        </div>
+        <SelectField
+          label="Select Project"
+          id="project"
+          name="projectId"
+          value={formData.projectId}
+          onChange={handleChange}
+          disabled={isReadOnly}
+          options={projects.map(project => ({
+            value: project.id,
+            label: project.name,
+          }))}
+          required={true}
+          defaultValue="Project Name"
+        />
 
-        <div>
-          <label htmlFor="taskDescription" className="block text-sm font-medium text-gray-700 mb-1">
-            Task description *
-          </label>
-          <textarea
-            id="taskDescription"
-            name="taskDescription"
-            rows={4}
-            value={formData.taskDescription}
-            onChange={handleChange}
-            placeholder="Write task here"
-            disabled={isReadOnly}
-            className={`
-              w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
-              focus:outline-none focus:ring-primary-500 focus:border-primary-500
-              ${errors.taskDescription ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
-              ${isReadOnly ? 'bg-gray-50 cursor-not-allowed' : ''}
-            `}
-          />
-          {errors.taskDescription && (
-            <p className="mt-1 text-sm text-red-600">{errors.taskDescription}</p>
-          )}
-        </div>
+        <SelectField
+          label="Type of Work"
+          id="workType"
+          name="workType"
+          value={formData.projectId}
+          onChange={handleChange}
+          disabled={isReadOnly}
+          options={projects.map(project => ({
+            value: project.id,
+            label: project.name,
+          }))}
+          required={true}
+          defaultValue="Select Work"
+        />
 
-        <div>
-          <label htmlFor="hours" className="block text-sm font-medium text-gray-700 mb-1">
+        <TextAreaField
+          id="taskDescription"
+          name="taskDescription"
+          label="Task Description"
+          value={formData.taskDescription}
+          onChange={handleChange}
+          required
+          disabled={false}
+          error={errors.notes}
+          infoTooltip="You can describe your work or add comments here."
+        />
+
+        <div className='flex flex-col gap-2 w-[364px] h-[66px]'>
+          <label htmlFor="hours" className="block text-[14px] font-medium text-gray-900 mb-1">
             Hours *
           </label>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center w-[113px] border border-gray-300 h-[37px] rounded-lg">
             <button
               type="button"
               onClick={() => setFormData(prev => ({ ...prev, hours: Math.max(0, prev.hours - 1) }))}
               disabled={isReadOnly}
-              className="px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-[34px] h-[34px] px-3 py-1 bg-gray-100 border-r text-gray-900 rounded-tl-lg rounded-bl-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               -
             </button>
@@ -217,48 +207,41 @@ export const TimesheetModal: React.FC<TimesheetModalProps> = ({
               min="0"
               step="0.5"
               disabled={isReadOnly}
-              className="text-center"
+              className="w-[47px] py-2 px-4 border-none text-gray-500 rounded-none"
               error={errors.hours}
             />
             <button
               type="button"
               onClick={() => setFormData(prev => ({ ...prev, hours: prev.hours + 1 }))}
               disabled={isReadOnly}
-              className="px-3 py-2 border border-gray-300 rounded-md text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-[34px] h-[34px] px-3 py-1 bg-gray-100 border-l rounded-tr-lg rounded-br-lg text-gray-900 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               +
             </button>
           </div>
         </div>
-
-        <Input
-          label="Date *"
-          type="date"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          disabled={isReadOnly}
-          error={errors.date}
-        />
-
-        <div className="flex justify-end space-x-3 pt-4">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          {!isReadOnly && (
+      </form>
+      <div className="flex items-center h-[77px] w-full border-t p-5 gap-4 ">
+        {!isReadOnly && (
             <Button
               type="submit"
               loading={loading}
+              className='w-full rounded-lg bg-blue-600 text-white'
             >
               Add entry
             </Button>
           )}
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onClose}
+            className='w-full border border-gray-300 bg-white rounded-lg'
+
+          >
+            Cancel
+          </Button>
+          
         </div>
-      </form>
     </Modal>
   );
 };

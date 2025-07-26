@@ -14,23 +14,15 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   title,
   children,
-  size = 'md'
 }) => {
   if (!isOpen) return null;
 
-  const sizeClasses = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-  };
-
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex min-h-screen items-center justify-center p-4">
-        <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
-        <div className={`relative bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]}`}>
-          <div className="flex items-center justify-between p-6 border-b">
-            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+    <div className="fixed flex items-center justify-center inset-0 z-50  w-[1440px]  overflow-y-auto">
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50" onClick={onClose} />
+        <div className={`relative bg-white rounded-lg shadow-xl w-[646px] h-[660px]`}>
+          <div className="flex items-center justify-between h-[67px] p-5 border-b border-gray-200">
+            <h3 className="text-[18px] font-semibold text-gray-900">{title}</h3>
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -38,11 +30,10 @@ export const Modal: React.FC<ModalProps> = ({
               <X size={20} />
             </button>
           </div>
-          <div className="p-6">
+          <div className="">
             {children}
           </div>
         </div>
-      </div>
     </div>
   );
 };

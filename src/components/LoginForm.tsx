@@ -67,7 +67,6 @@ export const LoginForm: React.FC = () => {
       });
 
       const data = await response.json();
-      console.log('Login response:', data);
       if (response.ok) {
         // Store token in localStorage for client-side API calls
         localStorage.setItem('auth-token', data.token);

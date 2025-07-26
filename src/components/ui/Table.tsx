@@ -15,7 +15,7 @@ export function Table({
   setIsModalOpen,
   className = '',
 }: TableProps) {
-  
+
   const router = useRouter();
 
   const getStatusBadge = (status: Timesheet['status']) => {
@@ -47,7 +47,7 @@ export function Table({
         router.push(`/dashboard/timesheet/${timesheet.id}`);
       } else if (timesheet.status === 'COMPLETED') {
         // Navigate to list view for viewing
-        router.push(`/dashboard/timesheet/${timesheet.id}?view=readonly`);
+        router.push(`/dashboard/timesheet/${timesheet.id}`);
       } else {
         // Open modal for creating new
         setSelectedTimesheet(timesheet);

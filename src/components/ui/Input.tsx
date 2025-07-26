@@ -15,7 +15,7 @@ export const Input: React.FC<InputProps> = ({
   const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <div className="flex flex-col gap-2 w-full h-[71px]">
+    <div className="flex flex-col gap-2 w-full">
       {label && (
         <label htmlFor={inputId} className="font-medium text-[14px] leading-[21px] tracking-normal text-gray-900">
           {label}
@@ -24,7 +24,7 @@ export const Input: React.FC<InputProps> = ({
       <input
         id={inputId}
         className={`
-          w-full h-[42px] gap-[10px] rounded-[8px] border border-gray-300 px-4 py-3
+          w-full h-[42px] gap-[10px] rounded-[8px] border border-gray-300 px-4 py-3 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
           ${error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}
           ${className}
         `}
